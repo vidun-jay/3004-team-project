@@ -1,4 +1,4 @@
-# 3004 Team Project: Developing and Testing a Software-based Prototype of an AED
+# COMP3004 Team Project: Developing and Testing a Software-based Prototype of an AED
 
 Below is a to-do checklist for our AED software simulation project, outlining the key steps from setup to submission.
 
