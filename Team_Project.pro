@@ -9,11 +9,15 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    CPR.cpp \
     main.cpp \
-    interface.cpp
+    interface.cpp \
+    test.cpp
 
 HEADERS += \
-    interface.h
+    CPR.h \
+    interface.h \
+    test.h
 
 FORMS += \
     interface.ui

@@ -172,7 +172,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
+   <widget class="QTextBrowser" name="output">
     <property name="geometry">
      <rect>
       <x>1010</x>
