@@ -1,15 +1,12 @@
 #include "Test.h"
 #include <QDebug>
 
+//file just to test the CPR function, will get deleted once we implement the function that will actually call CPR
 Test::Test(QObject *parent, bool isChild)
     : QObject(parent), isChild(isChild) {
     qDebug("we in the test construct");
 
     cpr = new CPR(nullptr, isChild);
-
-    // Connect the CPR simulation output to a slot in the Interface class
-    // This requires that you have a mechanism to send the text to the Interface class.
-    // For example, you might emit a signal that Interface listens to.
 }
 
 Test::~Test() {
