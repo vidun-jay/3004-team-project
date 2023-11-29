@@ -11,14 +11,19 @@ class CPR : public QWidget {
     Q_OBJECT
 
 public:
-    CPR(QWidget *parent = nullptr, bool isChild = false);
+    CPR(QObject* parent = nullptr, bool isChild = false);
     ~CPR();
 
+    void startCPR();
+
+    //setters
      void setInterface(Interface* value) {interF = value;}
-     void startCPR();
 
 private slots:
     void updateCPRFeedback();
+
+signals:
+    void messageToDisplay(const QString& message);
 
 private:
     Interface* interF;

@@ -3,21 +3,20 @@
 
 Test::Test(QObject *parent, bool isChild)
     : QObject(parent), isChild(isChild) {
-    qDebug("we in the test construct");
 
-    cpr = new CPR(nullptr, isChild);
+    cpr = new CPR(this, isChild);
 
-    // Connect the CPR simulation output to a slot in the Interface class
-    // This requires that you have a mechanism to send the text to the Interface class.
-    // For example, you might emit a signal that Interface listens to.
 }
 
-Test::~Test() {
-    qDebug("we in the test destruct");
-    delete cpr; // Clean up
-}
+//Test::~Test() {
+//    qDebug("we in the test destruct");
+////    delete cpr;
+//}
 
 void Test::onButtonClicked() {
-    qDebug("we in the test click");
-    cpr->startCPR(); // Start the CPR simulation
+    cpr->startCPR(); //starts the CPR simulation
+}
+
+CPR *Test::getCPRObject() const {
+    return cpr;
 }

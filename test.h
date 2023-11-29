@@ -9,10 +9,12 @@ class Test : public QObject {
 
 public:
     Test(QObject *parent = nullptr, bool isChild = false);
-    ~Test();
+//    ~Test();
 
-public slots:
-    void onButtonClicked(); // Slot to handle button click
+    void onButtonClicked();
+
+    //getters
+    CPR *getCPRObject() const;
 
 private:
     CPR *cpr;
