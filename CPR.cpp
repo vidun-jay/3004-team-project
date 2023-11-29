@@ -22,7 +22,6 @@ void CPR::startCPR() {
 void CPR::updateCPRFeedback() {
     //to differentiate if we are giving CPR to a child or an adult (logic is the same for both but can be modified if CPR for child should be different)
     if (isChild) {
-        qDebug() << "count is: " << compressionCount;
         //to simulate a real rescuer trying to give CPR to a victim, the initial ones wont be deep enough but after a few chest compressions, the rescuer is able to get the right depth (value can be changed)
         if (compressionCount == 0){
             emit messageToDisplay("STARTING CPR");
