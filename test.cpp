@@ -1,4 +1,4 @@
-#include "Test.h"
+#include "test.h"
 #include <QDebug>
 
 //file just to test the CPR function, will get deleted once we implement the function that will actually call CPR
@@ -16,3 +16,4 @@ void Test::onButtonClicked() {
 CPR *Test::getCPRObject() const {
     return cpr;
 }
+
