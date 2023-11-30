@@ -15,6 +15,8 @@ public:
     Interface(QWidget *parent = nullptr);
     ~Interface();
 
+    void appendToTextBrowser(const QString& message);
+
 private:
     Ui::Interface *ui;
 };
