@@ -1,7 +1,10 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+#include "aed.h"
 #include <QMainWindow>
+#include <QLabel>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Interface; }
@@ -16,8 +19,27 @@ public:
     ~Interface();
 
     void appendToTextBrowser(const QString& message);
+    void onSelfTestCompleted(bool success);
+    void onHeartRhythmAnalyzed(bool shockable);
+    void onGraphReady(const QPixmap &graph);
+    void updateBatteryStatus(int depletion);
+    void batteryCharged();
+    void handleReviveAttempt(AED::HeartRhythm initialRhythm);
+    void onCPRCompleted();
+    void electrodeRemoved();
+
+private slots:
+    void onPowerButtonClicked();
+    void updateCountdown();
 
 private:
     Ui::Interface *ui;
+    AED *aed;
+    QTimer *deliverShock;
+    int shockVal;
+    AED::HeartRhythm previousRhythm;
+    bool isAnalyzing = false;
+    bool isShock = false;
+    bool isPerformingCPR = false;
 };
 #endif // INTERFACE_H

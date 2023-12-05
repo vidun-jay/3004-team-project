@@ -11,7 +11,7 @@ class CPR : public QWidget {
     Q_OBJECT
 
 public:
-    CPR(QObject* parent = nullptr, bool isChild = false);
+    CPR(bool isChild = false);
     ~CPR();
 
     void startCPR();
@@ -24,6 +24,7 @@ private slots:
 
 signals:
     void messageToDisplay(const QString& message);
+    void cprCompleted();
 
 private:
     Interface* interF;
