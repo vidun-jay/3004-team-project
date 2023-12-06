@@ -10,14 +10,14 @@ CONFIG += c++11
 
 SOURCES += \
     CPR.cpp \
+    aed.cpp \
     main.cpp \
-    interface.cpp \
-    test.cpp
+    interface.cpp
 
 HEADERS += \
     CPR.h \
-    interface.h \
-    test.h
+    aed.h \
+    interface.h
 
 FORMS += \
     interface.ui
