@@ -1,4 +1,4 @@
-#include "AED.h"
+#include "aed.h"
 #include <cmath>
 #include <QPainter>
 
