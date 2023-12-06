@@ -27,6 +27,7 @@ public:
     void handleReviveAttempt(AED::HeartRhythm initialRhythm);
     void onCPRCompleted();
     void electrodeRemoved();
+    void setStepColor(QWidget *stepWidget);
 
 private slots:
     void onPowerButtonClicked();
