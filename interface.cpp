@@ -47,12 +47,20 @@ void Interface::appendToTextBrowser(const QString& message) {
     ui->output->append(message);
 }
 
+// mark a step as complete by coloring it green
+void Interface::setStepColor(QWidget *stepWidget) {
+    QPalette p = stepWidget->palette();
+    p.setColor(QPalette::Base, Qt::green);
+    stepWidget->setPalette(p);
+}
+
 //depletes the battery once the self-test is done
 void Interface::onSelfTestCompleted(bool success) {
     updateBatteryStatus(1); //reduce battery by 1% for self-test
 
     if (success){
         appendToTextBrowser("Selt-test was successful. Everything is working as intended.");
+        QThread::sleep(1);
     } else {
         appendToTextBrowser("Self-test has failed. Call maintenance to fix the issue.");
     }
@@ -76,24 +84,31 @@ void Interface::onSelfTestCompleted(bool success) {
             case 3:
                 rhythm = AED::VentricularTachycardia;
                 break;
-        }        
+        }
+
+        // once POST is complete, check if patient is ok
+        setStepColor(ui->step1);
 
         //message that places the pads on the victim (either child or adult)
         (ui->chooseAge->currentText() == "Child") ? appendToTextBrowser("Placing child pads on victims chest") : appendToTextBrowser("Placing adult pads on victims chest");
+        setStepColor(ui->step2);
 
         //message that starts the analysis
         appendToTextBrowser("Do not touch victim for accurate analysis. Starting analysis...");
+        setStepColor(ui->step3);
 
         //if we start with a Sinus Rhythm, that means the victim is ok
         if (rhythm == AED::SinusRhythm){
             isAnalyzing = false; //sets it to false
             appendToTextBrowser("Analysis complete. No issue with victim");
+            setStepColor(ui->step4);
             updateBatteryStatus(10); //reduce baterry by 10% for analysis
 
           //else, the victim is not ok and we start the process
         } else {
             isAnalyzing = false; //sets the flag to false
             aed->analyzeHeartRhythm(rhythm);
+            setStepColor(ui->step4);
         }
 
         //updates the graph based on the heart rhythm
@@ -105,6 +120,7 @@ void Interface::onSelfTestCompleted(bool success) {
 //depletes the battery once the analysis is done
 void Interface::onHeartRhythmAnalyzed(bool shockable) {
     appendToTextBrowser("Analysis complete.");
+    setStepColor(ui->step5);
 
     if (shockable) {
         shockVal = 3;
@@ -129,6 +145,7 @@ void Interface::updateCountdown() {
     } else {
         deliverShock->stop();
         appendToTextBrowser("SHOCK DELIVERED");
+        setStepColor(ui->step6);
         updateBatteryStatus(10); //reduce batter by 10% for shock
         isShock = false;
 
