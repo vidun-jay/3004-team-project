@@ -28,6 +28,8 @@ public:
     void onCPRCompleted();
     void electrodeRemoved();
     void setStepColor(QWidget *stepWidget);
+    void resetStepColor(QWidget *stepWidget);
+    void start();
 
 private slots:
     void onPowerButtonClicked();

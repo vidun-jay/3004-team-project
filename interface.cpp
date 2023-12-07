@@ -54,6 +54,13 @@ void Interface::setStepColor(QWidget *stepWidget) {
     stepWidget->setPalette(p);
 }
 
+//resets the steps to white when running again
+void Interface::resetStepColor(QWidget *stepWidget) {
+    QPalette p = stepWidget->palette();
+    p.setColor(QPalette::Base, Qt::white);
+    stepWidget->setPalette(p);
+}
+
 //depletes the battery once the self-test is done
 void Interface::onSelfTestCompleted(bool success) {
     updateBatteryStatus(1); //reduce battery by 1% for self-test
@@ -86,16 +93,13 @@ void Interface::onSelfTestCompleted(bool success) {
                 break;
         }
 
-        // once POST is complete, check if patient is ok
-        setStepColor(ui->step1);
-
         //message that places the pads on the victim (either child or adult)
         (ui->chooseAge->currentText() == "Child") ? appendToTextBrowser("Placing child pads on victims chest") : appendToTextBrowser("Placing adult pads on victims chest");
-        setStepColor(ui->step2);
+        setStepColor(ui->step3);
 
         //message that starts the analysis
         appendToTextBrowser("Do not touch victim for accurate analysis. Starting analysis...");
-        setStepColor(ui->step3);
+
 
         //if we start with a Sinus Rhythm, that means the victim is ok
         if (rhythm == AED::SinusRhythm){
@@ -108,7 +112,6 @@ void Interface::onSelfTestCompleted(bool success) {
         } else {
             isAnalyzing = false; //sets the flag to false
             aed->analyzeHeartRhythm(rhythm);
-            setStepColor(ui->step4);
         }
 
         //updates the graph based on the heart rhythm
@@ -120,7 +123,7 @@ void Interface::onSelfTestCompleted(bool success) {
 //depletes the battery once the analysis is done
 void Interface::onHeartRhythmAnalyzed(bool shockable) {
     appendToTextBrowser("Analysis complete.");
-    setStepColor(ui->step5);
+    setStepColor(ui->step4);
 
     if (shockable) {
         shockVal = 3;
@@ -145,7 +148,7 @@ void Interface::updateCountdown() {
     } else {
         deliverShock->stop();
         appendToTextBrowser("SHOCK DELIVERED");
-        setStepColor(ui->step6);
+        setStepColor(ui->step5);
         updateBatteryStatus(10); //reduce batter by 10% for shock
         isShock = false;
 
@@ -155,6 +158,7 @@ void Interface::updateCountdown() {
         CPR *cpr = new CPR(isChild);
         connect(cpr, &CPR::messageToDisplay, this, &Interface::appendToTextBrowser);
         connect(cpr, &CPR::cprCompleted, this, &Interface::onCPRCompleted);
+        setStepColor(ui->step6);
         cpr->startCPR();
         isPerformingCPR = true;
     }
@@ -178,16 +182,16 @@ void Interface::batteryCharged(){
     ui->battery->setValue(100);
 }
 
-//starts the process when the simulation user presses the power button
+//makes the steps background white and calls the start function
 void Interface::onPowerButtonClicked(){
-    //if the battery level is greater than 20%, the AED can function like usual
-    if (ui->battery->value() > 20){
-        aed->performSelfTest();
+    resetStepColor(ui->step1);
+    resetStepColor(ui->step2);
+    resetStepColor(ui->step3);
+    resetStepColor(ui->step4);
+    resetStepColor(ui->step5);
+    resetStepColor(ui->step6);
+    start();
 
-      //if its not then it doesnt have enough battery to complete the whole process (self-test, analysis and shock)
-    } else {
-        appendToTextBrowser("There is not enough battery left for making a successful run.");
-    }
 }
 
 //handles the analysis and choosing another heart rhythm after the first revive attempt
@@ -222,7 +226,7 @@ void Interface::onCPRCompleted() {
 
     //if the current heart rhythm and the previous heart rhythm are both Asystole, then the victim has died
     if (previousRhythm == AED::Asystole && newRhythm == AED::Asystole) {
-        appendToTextBrowser("Resuscitation failed. Victim is deceased.");        
+        appendToTextBrowser("Resuscitation failed. Victim is deceased.");
     } else {
         handleReviveAttempt(newRhythm);
     }
@@ -249,5 +253,25 @@ void Interface::electrodeRemoved(){
     if (isPerformingCPR) {
         //add logic to pause the CPR if the pads were removed during the CPR step
         isPerformingCPR = false;
+    }
+}
+
+//starts the simulation
+void Interface::start(){
+    appendToTextBrowser("Checking if patient is ok...");
+    // once POST is complete, check if patient is ok
+    setStepColor(ui->step1);
+
+    appendToTextBrowser("Calling 911.");
+    setStepColor(ui->step2);
+
+
+    //if the battery level is greater than 20%, the AED can function like usual
+    if (ui->battery->value() > 20){
+        aed->performSelfTest();
+
+      //if its not then it doesnt have enough battery to complete the whole process (self-test, analysis and shock)
+    } else {
+        appendToTextBrowser("There is not enough battery left for making a successful run.");
     }
 }
