@@ -14,6 +14,7 @@ public:
     explicit AED(QObject *parent = nullptr, bool isChild = false);
 
     enum HeartRhythm {
+        Unused,
         SinusRhythm,
         Asystole,
         VentricularFibrillation,
