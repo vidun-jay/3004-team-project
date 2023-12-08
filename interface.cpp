@@ -108,6 +108,16 @@ void Interface::onSelfTestCompleted(bool success) {
             setStepColor(ui->step4);
             updateBatteryStatus(10); //reduce baterry by 10% for analysis
 
+        } else if (rhythm == AED::Asystole){
+            bool isChild = ui->chooseAge->currentText() == "Child";
+            CPR *cpr = new CPR(isChild);
+            connect(cpr, &CPR::messageToDisplay, this, &Interface::appendToTextBrowser);
+            connect(cpr, &CPR::cprCompleted, this, &Interface::onCPRCompleted);
+            setStepColor(ui->step4);
+            setStepColor(ui->step5);
+            setStepColor(ui->step6);
+            cpr->startCPR();
+
           //else, the victim is not ok and we start the process
         } else {
             isAnalyzing = false; //sets the flag to false
@@ -190,6 +200,7 @@ void Interface::onPowerButtonClicked(){
     resetStepColor(ui->step4);
     resetStepColor(ui->step5);
     resetStepColor(ui->step6);
+    previousRhythm = AED::Unused;
     start();
 
 }
@@ -198,20 +209,28 @@ void Interface::onPowerButtonClicked(){
 void Interface::handleReviveAttempt(AED::HeartRhythm rhythm) {
     //checks if there isnt enough battery for the next rhythm if it isnt a Sinus Rhythm
     if (ui->battery->value() <=15 && rhythm != AED::SinusRhythm){
-        qDebug("in if");
         appendToTextBrowser("There is not enough battery left for making a successful run.");
 
       //if its a Sinus Rhythm, that means the victim is now ok
     } else if (rhythm == AED::SinusRhythm) {
-        qDebug("in else if");
         appendToTextBrowser("Starting another analysis...");
         appendToTextBrowser("Victim stabilized with Sinus Rhythm.");
 
-      //else, we choose another heart rhythm to analyze
-    } else {
-        qDebug("in else");
+      //else if its Asystole, then we perform CPR on the victim
+    } else if (rhythm == AED::Asystole){
         appendToTextBrowser("Starting another analysis...");
-        onHeartRhythmAnalyzed(rhythm == AED::VentricularFibrillation || rhythm == AED::VentricularTachycardia || rhythm == AED::Asystole);
+        // Start CPR process here
+        bool isChild = ui->chooseAge->currentText() == "Child";
+        CPR *cpr = new CPR(isChild);
+        connect(cpr, &CPR::messageToDisplay, this, &Interface::appendToTextBrowser);
+        connect(cpr, &CPR::cprCompleted, this, &Interface::onCPRCompleted);
+        setStepColor(ui->step6);
+        cpr->startCPR();
+
+     //else, we choose another heart rhythm to analyze
+    } else {
+        appendToTextBrowser("Starting another analysis...");
+        onHeartRhythmAnalyzed(rhythm == AED::VentricularFibrillation || rhythm == AED::VentricularTachycardia);
     }
 }
 

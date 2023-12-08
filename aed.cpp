@@ -10,13 +10,13 @@ AED::AED(QObject *parent, bool isChild) : QObject(parent), isChild(isChild) {
 
 //simulate self-tests
 void AED::performSelfTest() {
-    bool testSuccess = rand() % 2; //gives a 50/50 chance that the self-test will fail or not
+    bool testSuccess = rand() % 4 != 0; //gives a 1/4 chance that the self-test will fail or not
     emit selfTestCompleted(testSuccess); //emits the result to interface
  }
 
 //analyzes and checks if the rhythm is shockable or not
 bool AED::analyzeHeartRhythm(AED::HeartRhythm rhythm) {
-    bool shockable = (rhythm != AED::SinusRhythm); //if the heart rhythm is anything other than Sinus rhythm then its a shockable one
+    bool shockable = (rhythm == AED::VentricularFibrillation || rhythm == AED::VentricularTachycardia); //if the heart rhythm is either Vfib or Vtach then its a shockable one
     emit heartRhythmAnalyzed(shockable); //emits the result to interface
 
     return shockable;
