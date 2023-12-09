@@ -30,6 +30,7 @@ public:
     void setStepColor(QWidget *stepWidget);
     void resetStepColor(QWidget *stepWidget);
     void start();
+    void resetToAnalysisStep();
 
 private slots:
     void onPowerButtonClicked();

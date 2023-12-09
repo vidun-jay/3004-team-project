@@ -254,25 +254,48 @@ void Interface::onCPRCompleted() {
     previousRhythm = newRhythm;
 }
 
+// resets the interface and the AED to prepare for a new analysis
+void Interface::resetToAnalysisStep() {
+    // stop any ongoing shock delivery or CPR operation
+    if (deliverShock->isActive()) {
+        deliverShock->stop();
+    }
+
+    isPerformingCPR = false;
+
+    // reset the internal state
+    isAnalyzing = false;
+    isShock = false;
+    isPerformingCPR = false;
+
+    resetStepColor(ui->step1);
+    resetStepColor(ui->step2);
+    resetStepColor(ui->step3);
+    resetStepColor(ui->step4);
+    resetStepColor(ui->step5);
+    resetStepColor(ui->step6);
+
+    // reset the heart rhythm graph to the initial state
+    QPixmap emptyGraph;
+    ui->finalGraph->setPixmap(emptyGraph);
+
+    appendToTextBrowser("Electrodes removed");
+    appendToTextBrowser("Reattaching electrodes");
+
+    // finally, restart the AED process
+    start();
+}
+
+
 //handles what happens when the electrode pads are removed mid process
 void Interface::electrodeRemoved(){
     appendToTextBrowser("Electrode pads has been removed, the analysis can't be completed");
 
+    isAnalyzing = false;
+    isShock = false;
+    isPerformingCPR = false;
 
-    if (isAnalyzing) {
-        //add logic to stop the analysis if the pads were removed during the analysis step
-        isAnalyzing = false;
-    }
-
-    if (isShock) {
-        //add logic to stop the shock delivery if the pads were removed during the shock step
-        isShock = false;
-    }
-
-    if (isPerformingCPR) {
-        //add logic to pause the CPR if the pads were removed during the CPR step
-        isPerformingCPR = false;
-    }
+    resetToAnalysisStep();
 }
 
 //starts the simulation
