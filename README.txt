@@ -10,7 +10,8 @@ Wassim Ali:
  - Use case 2 & 4
 
 Vidun Jayakody:
- -
+- Helped with code implementation, bug fixes, organized project structure and roadmap
+- Streamlined communication and organized GitHub  
 
 Zhi Ou Yang:
  - 
