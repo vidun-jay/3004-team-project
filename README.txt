@@ -14,7 +14,8 @@ Vidun Jayakody:
 - Streamlined communication and organized GitHub  
 
 Zhi Ou Yang:
- - 
+- Sequence Diagrams
+- Texual explainations for use cases and sequence diagrams
 
 Qijun Han:
  - Use Case 1, 3, 5, 6
