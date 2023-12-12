@@ -10,17 +10,17 @@ Below is a to-do checklist for our AED software simulation project, outlining th
 - [x] Define and document use cases for the AED software simulation
 
 ### Part 2: Design Documentation
-- [ ] Create UML Class Diagram
-- [ ] Develop Sequence diagrams for normal and exceptional safety-related operation
-- [ ] Design State diagrams
-- [ ] Write textual explanation of design decisions
+- [x] Create UML Class Diagram
+- [x] Develop Sequence diagrams for normal and exceptional safety-related operation
+- [x] Design State diagrams
+- [x] Write textual explanation of design decisions
 
 ### Part 3: Implementation
 - [x] Implement source code in Qt C++ (ensure code builds and runs on course VM)
 - [x] Develop tests based on scenarios specified in design
 
 ### Part 4: Video
-- [ ] Record a video demonstrating the simulation through specified scenarios
+- [x] Record a video demonstrating the simulation through specified scenarios
 
 ### Part 5: Traceability Matrix
 - [ ] Create and maintain a traceability matrix
