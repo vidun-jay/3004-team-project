@@ -109,6 +109,7 @@ void Interface::onSelfTestCompleted(bool success) {
             updateBatteryStatus(10); //reduce baterry by 10% for analysis
 
         } else if (rhythm == AED::Asystole){
+            onHeartRhythmAnalyzed(false); //not a shockable rhythm
             bool isChild = ui->chooseAge->currentText() == "Child";
             CPR *cpr = new CPR(isChild);
             connect(cpr, &CPR::messageToDisplay, this, &Interface::appendToTextBrowser);
@@ -279,7 +280,6 @@ void Interface::resetToAnalysisStep() {
     QPixmap emptyGraph;
     ui->finalGraph->setPixmap(emptyGraph);
 
-    appendToTextBrowser("Electrodes removed");
     appendToTextBrowser("Reattaching electrodes");
 
     // finally, restart the AED process
