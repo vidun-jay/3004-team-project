@@ -23,7 +23,7 @@ Below is a to-do checklist for our AED software simulation project, outlining th
 - [x] Record a video demonstrating the simulation through specified scenarios
 
 ### Part 5: Traceability Matrix
-- [ ] Create and maintain a traceability matrix
+- [x] Create and maintain a traceability matrix
 
 ## Project Specifics
 ### User Interface Design
