@@ -16,7 +16,12 @@ Zhi Ou Yang:
  - 
 
 Qijun Han:
- -
+ - Use Case 1, 3, 5, 6
+ - Active Diagram
+ - UML Class Diagram
+ - State Diagram
+ - Sequence Diagram 1, 2, 3, 4, 5, 6,7,8
+ - Traceability Matrix
 
 Everyone:
  - Peer reviewed what everyone else was working on and provided feedback when necessary
