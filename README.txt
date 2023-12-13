@@ -29,6 +29,6 @@ Everyone:
  - Peer reviewed what everyone else was working on and provided feedback when necessary
 
 File originization:
- - The files that contain the AED+ simulation code are in the (BLANK) folder
+ - The files that contain the AED+ simulation code are in the root folder
  - The simulation video is in the main folder
  - The other deliverables are in the Google Doc page called "COMP3004 Group11"
