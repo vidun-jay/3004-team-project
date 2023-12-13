@@ -1,51 +1,36 @@
 # COMP3004 Team Project: Developing and Testing a Software-based Prototype of an AED
 
-Below is a to-do checklist for our AED software simulation project, outlining the key steps from setup to submission.
+### Team Members and names: Team 11 (4)
+- Wassim Ali
+- Vidun Jayakody
+- Zhi Ou Yang
+- Qijun Han
 
-## Project Setup
-- [x] Set up GitHub repository (private, access for assigned TA)
+### Collaboration Breakdown:
+#### Wassim Ali
+ - Code implementation except for the setStepColor and resetAnalysisStep functions
+ - Use case 2 & 4
 
-## Deliverables
-### Part 1: Use Cases
-- [x] Define and document use cases for the AED software simulation
+#### Vidun Jayakody
+- Helped with code implementation, bug fixes, organized project structure and roadmap
+- Streamlined communication and organized GitHub
 
-### Part 2: Design Documentation
-- [x] Create UML Class Diagram
-- [x] Develop Sequence diagrams for normal and exceptional safety-related operation
-- [x] Design State diagrams
-- [x] Write textual explanation of design decisions
+#### Zhi Ou Yang
+- Sequence Diagrams
+- Texual explainations for use cases and sequence diagrams
 
-### Part 3: Implementation
-- [x] Implement source code in Qt C++ (ensure code builds and runs on course VM)
-- [x] Develop tests based on scenarios specified in design
+#### Qijun Han
+ - Use Case 1, 3, 5, 6
+ - Active Diagram
+ - UML Class Diagram
+ - State Diagram
+ - Sequence Diagram 1, 2, 3, 4, 5, 6,7,8
+ - Traceability Matrix
 
-### Part 4: Video
-- [x] Record a video demonstrating the simulation through specified scenarios
+#### Everyone
+ - Peer reviewed what everyone else was working on and provided feedback when necessary
 
-### Part 5: Traceability Matrix
-- [x] Create and maintain a traceability matrix
-
-## Project Specifics
-### User Interface Design
-- [x] Design GUI resembling the AED Plus's display
-- [x] Develop visual elements (CPR feedback, diagnosis results, status indicators)
-
-### Cardiac Arrhythmia Detection
-- [x] Develop detection module for ventricular fibrillation and tachycardia
-- [x] Simulate analysis process and visual/textual feedback
-
-### Real-Time CPR Feedback
-- [x] Create a system emulating real-time CPR feedback
-
-### Visual Prompts
-- [x] Specify scenarios with visual prompts for simulated cardiac emergency
-
-### User Interaction
-- [x] Implement interactive system for AED operation actions (electrode placement, shock delivery)
-
-### Simulated Scenarios
-- [x] Develop various patient condition scenarios for software testing
-
-## Submission
-- [ ] Prepare final submission package (tar/zip file)
-- [ ] Schedule project review-demo with TA
+### File organization
+ - The files that contain the AED+ simulation code are in the root folder
+ - The simulation video is in the main folder
+ - The other deliverables are in the attached document called COMP3004 Group11 (also included as pdf in this repo)
