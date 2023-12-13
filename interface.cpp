@@ -104,9 +104,8 @@ void Interface::onSelfTestCompleted(bool success) {
         //if we start with a Sinus Rhythm, that means the victim is ok
         if (rhythm == AED::SinusRhythm){
             isAnalyzing = false; //sets it to false
-            appendToTextBrowser("Analysis complete. No issue with victim");
             setStepColor(ui->step4);
-            updateBatteryStatus(10); //reduce baterry by 10% for analysis
+            onHeartRhythmAnalyzed(false); //not a shockable rhythm
 
         } else if (rhythm == AED::Asystole){
             onHeartRhythmAnalyzed(false); //not a shockable rhythm
@@ -147,6 +146,7 @@ void Interface::onHeartRhythmAnalyzed(bool shockable) {
 //updates the countdown and delivers the shock
 void Interface::updateCountdown() {    
     isShock = true;
+    bool isChild = ui->chooseAge->currentText() == "Child";
 
     //displays a message that warns everyone to stand back before the shock is delivered
     if (shockVal >= 1) {
@@ -158,20 +158,25 @@ void Interface::updateCountdown() {
       //delivers the shock
     } else {
         deliverShock->stop();
-        appendToTextBrowser("SHOCK DELIVERED");
-        setStepColor(ui->step5);
-        updateBatteryStatus(10); //reduce batter by 10% for shock
-        isShock = false;
+        if (isChild){
+            appendToTextBrowser("SHOCK DELIVERED ON CHILD");
+            setStepColor(ui->step5);
+            updateBatteryStatus(7); //shock depletes the battery less for a child since the volatge is lower
+            isShock = false;
+        } else {
+            appendToTextBrowser("SHOCK DELIVERED");
+            setStepColor(ui->step5);
+            updateBatteryStatus(10); //reduce batter by 10% for shock
+            isShock = false;
+        }
 
         isPerformingCPR = true;
         // Start CPR process here
-        bool isChild = ui->chooseAge->currentText() == "Child";
         CPR *cpr = new CPR(isChild);
         connect(cpr, &CPR::messageToDisplay, this, &Interface::appendToTextBrowser);
         connect(cpr, &CPR::cprCompleted, this, &Interface::onCPRCompleted);
         setStepColor(ui->step6);
         cpr->startCPR();
-        isPerformingCPR = true;
     }
 }
 
